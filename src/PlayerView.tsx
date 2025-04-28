@@ -1,5 +1,8 @@
 // PlayerView.tsx
 import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
+import "./PlayerView.css";
+const socket = io("http://localhost:3001");
 
 export default function PlayerView() {
   const [timeLeft, setTimeLeft] = useState(60 * 60);
@@ -20,14 +23,31 @@ export default function PlayerView() {
     return `${mins}:${secs}`;
   };
 
+  useEffect(() => {
+    socket.on("updateTime", (newTime: number) => {
+      setTimeLeft(newTime);
+    });
+  
+    socket.on("updateHint", (newHint: string) => {
+      setDisplayHint(newHint);
+    });
+  
+    return () => {
+      socket.off("updateTime");
+      socket.off("updateHint");
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black text-white p-6 font-mono flex flex-col items-center justify-center space-y-6">
-      <h1 className="text-3xl">⏳ Time Remaining</h1>
-      <div className="text-6xl font-bold text-green-400">{formatTime(timeLeft)}</div>
-      <div className="text-xl mt-10">👻 Hint</div>
-      <div className="text-lg bg-gray-800 p-4 rounded-xl min-h-[4rem] w-full max-w-md text-center">
-        {displayHint || <span className="text-gray-500">No hint yet...</span>}
-      </div>
+    <div className="playerview">
+      <center>
+        <h1 className="time-title"> Time Remaining / Aikaa Jäljellä </h1>
+        <h1 className="time-display">{formatTime(timeLeft)}</h1>
+        <div className="hint-title">Hint / Vihje </div>
+        <div className="hint-box">
+          {displayHint || <span className="hint">No hint yet...</span>}
+        </div>
+      </center>
     </div>
   );
 }

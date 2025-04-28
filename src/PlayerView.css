@@ -1,0 +1,23 @@
+/* PlayerView.css */
+body {
+    background-color: #d2b48c; /* Light brown color */
+    color: #3a1d08; /* Dark brown color */
+}
+
+h1 {
+    font-size: 3em; /* Make h1 a lot bigger */
+    color: #3a1d08; /* Ensure h1 text is also dark brown */
+}
+
+.hint-title {
+    font-size: 2em; /* Make hint title a lot bigger */
+    color: #3a1d08; /* Ensure hint title text is also dark brown */
+}
+
+.hint-box {
+    background-color: #fff8dc; /* Cornsilk color for hint box */
+    border: 2px solid #3a1d08; /* Dark brown border */
+    padding: 20px; /* Add some padding */
+    margin: 20px; /* Add some margin */
+    font-size: 1.5em; /* Make hint text a bit bigger */
+}

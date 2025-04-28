@@ -1,5 +1,8 @@
 // Controller.tsx
 import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
+const socket = io("http://localhost:3001");
+
 
 export default function Controller() {
   const [timeLeft, setTimeLeft] = useState(60 * 60);
@@ -11,11 +14,14 @@ export default function Controller() {
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
     if (isRunning && timeLeft > 0) {
-      timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+      timer = setInterval(() => {
+        setTimeLeft((t) => {
+          const newTime = t - 1;
+          socket.emit("updateTime", newTime);
+          return newTime;
+        });
+      }, 1000);
     }
-    return () => {
-      if (timer) clearInterval(timer);
-    };
   }, [isRunning, timeLeft]);
 
   useEffect(() => {
@@ -23,7 +29,8 @@ export default function Controller() {
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          setHints(data);
+            const mappedHints = data.map((hint: { id: number; title: string; text: string }) => `${hint.title}: ${hint.text}`);
+          setHints(mappedHints);
         } else {
           console.error("Invalid hint format");
         }
@@ -72,6 +79,7 @@ export default function Controller() {
             setTimeLeft(60 * 60);
             setDisplayHint("");
             setSelectedHint("");
+            socket.emit("resetGame");
           }}
         >
           Reset
@@ -91,7 +99,11 @@ export default function Controller() {
           ))}
         </select>
         <div className="flex gap-2 mt-2">
-          <button onClick={() => setDisplayHint(selectedHint)} disabled={!selectedHint}>
+          <button onClick={() => {
+            setDisplayHint(selectedHint)
+            socket.emit("updateHint", selectedHint); 
+          }} 
+            disabled={!selectedHint}>
             Show Hint
           </button>
           <button onClick={() => setDisplayHint("")}>Clear Hint</button>
