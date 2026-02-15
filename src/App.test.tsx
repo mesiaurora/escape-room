@@ -26,16 +26,16 @@ afterEach(() => {
   window.history.pushState({}, "", "/");
 });
 
-test("renders controller route at /controller", () => {
+test("renders controller route at /controller", async () => {
   window.history.pushState({}, "", "/controller");
-  const App = require("./App").default;
+  const App = (await import("./App")).default;
   render(<App />);
   expect(screen.getByText("Mock Controller")).toBeInTheDocument();
 });
 
-test("renders player route at /player", () => {
+test("renders player route at /player", async () => {
   window.history.pushState({}, "", "/player");
-  const App = require("./App").default;
+  const App = (await import("./App")).default;
   render(<App />);
   expect(screen.getByText("Mock Player View")).toBeInTheDocument();
 });

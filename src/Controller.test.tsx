@@ -17,9 +17,9 @@ jest.mock("socket.io-client", () => ({
 
 const { __mockSocket: mockSocket } = jest.requireMock("socket.io-client") as {
   __mockSocket: {
-    emit: jest.Mock;
-    on: jest.Mock;
-    off: jest.Mock;
+    emit: ReturnType<typeof jest.fn>;
+    on: ReturnType<typeof jest.fn>;
+    off: ReturnType<typeof jest.fn>;
   };
 };
 

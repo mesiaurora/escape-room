@@ -1,0 +1,176 @@
+.controller-page {
+  min-height: 100vh;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 8% 14%, rgba(246, 233, 211, 0.9), rgba(246, 233, 211, 0) 40%),
+    radial-gradient(circle at 90% 10%, rgba(220, 206, 187, 0.8), rgba(220, 206, 187, 0) 42%),
+    linear-gradient(135deg, #f0e4cf 0%, #dbc3a5 48%, #c7a180 100%);
+  color: #2f1e13;
+  font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+}
+
+.controller-shell {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 36px);
+  border: 2px solid rgba(47, 30, 19, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 250, 241, 0.92);
+  box-shadow: 0 20px 45px rgba(47, 30, 19, 0.2);
+  display: grid;
+  gap: 18px;
+}
+
+.controller-header h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+}
+
+.controller-header p {
+  margin: 6px 0 0;
+  color: rgba(47, 30, 19, 0.75);
+}
+
+.controller-time-card {
+  padding: 18px;
+  border: 1px solid rgba(47, 30, 19, 0.14);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fffef8 0%, #faf0df 100%);
+  text-align: center;
+}
+
+.controller-label {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(47, 30, 19, 0.72);
+}
+
+.controller-time {
+  margin: 0;
+  font-size: clamp(2.2rem, 8vw, 4.8rem);
+  line-height: 1;
+  font-weight: 700;
+  color: #7a481f;
+}
+
+.controller-status {
+  margin: 10px auto 0;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.controller-status.running {
+  color: #0c5b36;
+  background: rgba(82, 179, 126, 0.2);
+}
+
+.controller-status.paused {
+  color: #7a4a19;
+  background: rgba(199, 145, 84, 0.24);
+}
+
+.controller-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.controller-button {
+  border: 1px solid rgba(47, 30, 19, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+
+.controller-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(47, 30, 19, 0.12);
+}
+
+.controller-button:active {
+  transform: translateY(0);
+}
+
+.controller-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.controller-button.start {
+  background: #d9f4dc;
+}
+
+.controller-button.pause {
+  background: #ffe9c8;
+}
+
+.controller-button.reset {
+  background: #ffe0dc;
+}
+
+.controller-button.show {
+  background: #e4edff;
+}
+
+.controller-button.clear {
+  background: #f5f0ff;
+}
+
+.controller-hints {
+  display: grid;
+  gap: 8px;
+}
+
+.controller-select,
+.controller-textarea {
+  width: 100%;
+  border: 1px solid rgba(47, 30, 19, 0.24);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.96rem;
+  color: #2f1e13;
+  background: #fffdf8;
+}
+
+.controller-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.controller-preview {
+  padding: 14px;
+  border: 1px solid rgba(47, 30, 19, 0.16);
+  border-radius: 12px;
+  background: #fffcf4;
+}
+
+.controller-preview-box {
+  min-height: 52px;
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .controller-page {
+    padding: 12px;
+  }
+
+  .controller-shell {
+    border-radius: 14px;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .controller-button {
+    flex: 1 1 auto;
+  }
+}

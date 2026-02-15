@@ -39,7 +39,7 @@ npm install
 
 ## Run Locally
 
-You need **two terminals**.
+You need two terminals.
 
 1. Start the React frontend (port `3000`):
 
@@ -87,8 +87,8 @@ Controller renders each hint as `"<title>: <text>"` in the dropdown.
 
 ## Notes
 
-- The pause button in the controller emits a `pauseGame` event, but `server.js` does not currently handle it.
-- The player view has a local 1-second countdown loop and also receives server updates.
+- `server.js` now handles `startGame`, `pauseGame`, and `resetGame` events.
+- The player view follows server timer updates (no local countdown loop), so pause stays in sync across screens.
 
 ## Build
 

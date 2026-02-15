@@ -20,9 +20,9 @@ jest.mock("socket.io-client", () => ({
 
 const { __mockSocket: mockSocket } = jest.requireMock("socket.io-client") as {
   __mockSocket: {
-    emit: jest.Mock;
-    on: jest.Mock;
-    off: jest.Mock;
+    emit: ReturnType<typeof jest.fn>;
+    on: ReturnType<typeof jest.fn>;
+    off: ReturnType<typeof jest.fn>;
   };
 };
 
@@ -37,7 +37,7 @@ describe("PlayerView", () => {
     jest.useRealTimers();
   });
 
-  test("shows initial time and decrements locally each second", () => {
+  test("shows initial time and does not decrement locally without socket updates", () => {
     render(<PlayerView />);
     expect(screen.getByText("60:00")).toBeInTheDocument();
 
@@ -45,7 +45,7 @@ describe("PlayerView", () => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(screen.getByText("59:59")).toBeInTheDocument();
+    expect(screen.getByText("60:00")).toBeInTheDocument();
   });
 
   test("updates displayed time and hint from socket events", () => {
