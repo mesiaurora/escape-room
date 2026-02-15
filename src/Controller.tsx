@@ -22,6 +22,9 @@ export default function Controller() {
         });
       }, 1000);
     }
+      return () => {
+    if (timer) clearInterval(timer);
+  };
   }, [isRunning, timeLeft]);
 
   useEffect(() => {
@@ -72,7 +75,10 @@ export default function Controller() {
       <h1 className="text-2xl">🎛️ Game Controller</h1>
       <div className="flex gap-2">
         <button onClick={() => setIsRunning(true)}>Start</button>
-        <button onClick={() => setIsRunning(false)}>Pause</button>
+        <button onClick={() => {
+          setIsRunning(false);
+          socket.emit("pauseGame");
+        }}>Pause</button>
         <button
           onClick={() => {
             setIsRunning(false);
@@ -98,7 +104,14 @@ export default function Controller() {
             <option key={idx} value={hint}>{hint}</option>
           ))}
         </select>
-        <div className="flex gap-2 mt-2">
+        </div><div>
+              <textarea
+          className="w-full bg-gray-700 text-white p-2 rounded-md"
+          placeholder="Write your custom hint here..."
+          value={selectedHint}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setSelectedHint(e.target.value)}
+        ></textarea>        
+  <div className="flex gap-2 mt-2">
           <button onClick={() => {
             setDisplayHint(selectedHint)
             socket.emit("updateHint", selectedHint); 

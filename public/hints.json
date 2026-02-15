@@ -1,13 +1,13 @@
 [
     {
       "id": 1,
-      "title": "Suitcase Lock",
-      "text": "Check the old newspaper inside the suitcase. Elli's birthday might be more than just a date."
+      "title": "First hint",
+      "text": "Does Elli's letter or photo have a number that could be a code? Look closely at the details."
     },
     {
       "id": 2,
-      "title": "Bookshelf Puzzle",
-      "text": "The order of the books is key. Think about the emotions in the titles."
+      "title": "Books Puzzle",
+      "text": "The order of the books is key."
     },
     {
       "id": 3,
@@ -16,38 +16,88 @@
     },
     {
       "id": 4,
-      "title": "The Urns",
-      "text": "Together in life, and now in death. Unite the urns to bring peace to the wandering soul."
+      "title": "Coffee pot",
+      "text": "Is there something more than coffee?"
     },
     {
       "id": 5,
-      "title": "The Clock",
-      "text": "Time is a tricky thing. The clock's hands might not be the only thing that needs to be set right."
+      "title": "Under the bed",
+      "text": "Maybe the bed is hiding something. Check under it for clues."
     },
     {
       "id": 6,
-      "title": "The Mirror",
-      "text": "Reflections can be deceiving. Look beyond the surface to find the truth."
+      "title": "Flashlight",
+      "text": "You found a flashlight, use it."
     },
     {
       "id": 7,
       "title": "The Painting",
-      "text": "Art can hide secrets. Look closely at the details in the painting for clues."
+      "text": "Pictures can hide secrets. Look at the picture with the right light."
     },
     {
       "id": 8,
-      "title": "The Music Box",
-      "text": "The melody holds a secret. Listen carefully to the notes and their order."
+      "title": "Look up",
+      "text": "Is there something that can be found looking up?"
     },
     {
       "id": 9,
-      "title": "The Diary",
-      "text": "Words can reveal more than just thoughts. Pay attention to the dates and events mentioned."
+      "title": "Chess pieces",
+      "text": "Chess pieces can give a code"
     },
     {
       "id": 10,
-      "title": "The Candles",
-      "text": "Light can guide you. The arrangement of the candles might lead to a hidden message."
+      "title": "Bottles",
+      "text": "How many bottles? Maybe code hides in numbers."
+    },
+    {
+      "id": 1,
+      "title": "Ensimmäinen vihje",
+      "text": "Onko Ellin kirjeessä tai valokuvassa numero, joka voisi olla koodi? Katso tarkasti yksityiskohtia."
+    },
+    {
+      "id": 2,
+      "title": "Kirjapulma",
+      "text": "Kirjojen järjestys on avain."
+    },
+    {
+      "id": 3,
+      "title": "Aaveen kirje",
+      "text": "Kirje puhuu menetetystä rakkaudesta. Milloin he tapasivat? Se vuosi avaa enemmän kuin muistoja."
+    },
+    {
+      "id": 4,
+      "title": "Kahvipannu",
+      "text": "Onko kahvin lisäksi jotain muuta?"
+    },
+    {
+      "id": 5,
+      "title": "Sängyn alla",
+      "text": "Ehkä sänky piilottaa jotain. Tarkista sen alta vihjeitä."
+    },
+    {
+      "id": 6,
+      "title": "Taskulamppu",
+      "text": "Löysit taskulampun, käytä sitä."
+    },
+    {
+      "id": 7,
+      "title": "Maalaus",
+      "text": "Kuvat voivat piilottaa salaisuuksia. Katso kuvaa oikeassa valossa."
+    },
+    {
+      "id": 8,
+      "title": "Katso ylös",
+      "text": "Voiko jotain löytyä katsomalla ylös?"
+    },
+    {
+      "id": 9,
+      "title": "Chess pieces",
+      "text": "Chess pieces can give a code"
+    },
+    {
+      "id": 10,
+      "title": "Pullot",
+      "text": "Kuinka monta pulloa? Ehkä siellä on koodi."
     }
   ]
   

@@ -1,5 +1,5 @@
 // PlayerView.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { io } from "socket.io-client";
 import "./PlayerView.css";
 const socket = io("http://localhost:3001");
@@ -27,7 +27,7 @@ export default function PlayerView() {
     socket.on("updateTime", (newTime: number) => {
       setTimeLeft(newTime);
     });
-  
+
     socket.on("updateHint", (newHint: string) => {
       setDisplayHint(newHint);
     });
