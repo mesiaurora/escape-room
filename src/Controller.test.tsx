@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, act, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Controller from "./Controller";
 
@@ -58,7 +58,10 @@ describe("Controller", () => {
     expect(showHintButton).toBeEnabled();
 
     fireEvent.click(showHintButton);
-    expect(mockSocket.emit).toHaveBeenCalledWith("updateHint", "Try the painting");
+    expect(mockSocket.emit).toHaveBeenCalledWith("updateHint", {
+      roomId: "room-1",
+      hint: "Try the painting",
+    });
   });
 
   test("emits pause and reset events from control buttons", async () => {
@@ -67,20 +70,27 @@ describe("Controller", () => {
     fireEvent.click(screen.getByRole("button", { name: "Pause" }));
     fireEvent.click(screen.getByRole("button", { name: "Reset" }));
 
-    expect(mockSocket.emit).toHaveBeenCalledWith("pauseGame");
-    expect(mockSocket.emit).toHaveBeenCalledWith("resetGame");
+    expect(mockSocket.emit).toHaveBeenCalledWith("pauseGame", "room-1");
+    expect(mockSocket.emit).toHaveBeenCalledWith("resetGame", "room-1");
   });
 
-  test("emits updateTime every second while running", async () => {
-    jest.useFakeTimers();
+  test("emits start event for active room", async () => {
     await renderController();
 
     fireEvent.click(screen.getByRole("button", { name: "Start" }));
 
-    act(() => {
-      jest.advanceTimersByTime(1000);
-    });
+    expect(mockSocket.emit).toHaveBeenCalledWith("startGame", "room-1");
+  });
 
-    expect(mockSocket.emit).toHaveBeenCalledWith("updateTime", 3599);
+  test("adds and switches to a new room", async () => {
+    await renderController();
+
+    fireEvent.change(screen.getByPlaceholderText("New room id (example: room-2)"), {
+      target: { value: "room-2" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add / Switch" }));
+
+    expect(mockSocket.emit).toHaveBeenCalledWith("joinRoom", "room-2");
+    expect(screen.getByText("Active Room: room-2")).toBeInTheDocument();
   });
 });

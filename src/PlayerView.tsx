@@ -3,25 +3,50 @@ import { io } from "socket.io-client";
 import "./PlayerView.css";
 
 const socket = io("http://localhost:3001");
+const DEFAULT_ROOM = "room-1";
 
 export default function PlayerView() {
   const [timeLeft, setTimeLeft] = useState(60 * 60);
   const [displayHint, setDisplayHint] = useState<string>("");
+  const [roomId, setRoomId] = useState(DEFAULT_ROOM);
 
   useEffect(() => {
-    socket.on("updateTime", (newTime: number) => {
-      setTimeLeft(newTime);
-    });
+    const fromQuery = new URLSearchParams(window.location.search).get("room");
+    setRoomId((fromQuery || DEFAULT_ROOM).trim() || DEFAULT_ROOM);
+  }, []);
 
-    socket.on("updateHint", (newHint: string) => {
+  useEffect(() => {
+    socket.emit("joinRoom", roomId);
+
+    const handleRoomState = (roomState: {
+      roomId: string;
+      timeLeft: number;
+      hint: string;
+      isRunning: boolean;
+    }) => {
+      if (roomState.roomId !== roomId) return;
+      setTimeLeft(roomState.timeLeft);
+      setDisplayHint(roomState.hint);
+    };
+
+    const handleUpdateTime = (newTime: number) => {
+      setTimeLeft(newTime);
+    };
+
+    const handleUpdateHint = (newHint: string) => {
       setDisplayHint(newHint);
-    });
+    };
+
+    socket.on("roomState", handleRoomState);
+    socket.on("updateTime", handleUpdateTime);
+    socket.on("updateHint", handleUpdateHint);
 
     return () => {
-      socket.off("updateTime");
-      socket.off("updateHint");
+      socket.off("roomState", handleRoomState);
+      socket.off("updateTime", handleUpdateTime);
+      socket.off("updateHint", handleUpdateHint);
     };
-  }, []);
+  }, [roomId]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -35,6 +60,7 @@ export default function PlayerView() {
     <main className="playerview">
       <section className="playerview-panel">
         <h1 className="time-title">Time Remaining / Aikaa Jaljella</h1>
+        <p className="hint-title">Room: {roomId}</p>
         <h2 className="time-display">{formatTime(timeLeft)}</h2>
         <p className="hint-title">Hint / Vihje</p>
         <div className="hint-box" aria-live="polite">

@@ -80,6 +80,49 @@
   gap: 10px;
 }
 
+.controller-room-manager {
+  display: grid;
+  gap: 10px;
+}
+
+.controller-room-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.controller-input {
+  flex: 1;
+  min-width: 220px;
+  border: 1px solid rgba(47, 30, 19, 0.24);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.96rem;
+  color: #2f1e13;
+  background: #fffdf8;
+}
+
+.controller-room-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.controller-room-chip {
+  border: 1px solid rgba(47, 30, 19, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: #f7ecdb;
+  color: #2f1e13;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.controller-room-chip.active {
+  background: #2f1e13;
+  color: #fff7eb;
+}
+
 .controller-button {
   border: 1px solid rgba(47, 30, 19, 0.2);
   border-radius: 10px;

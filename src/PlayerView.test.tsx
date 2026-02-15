@@ -39,6 +39,8 @@ describe("PlayerView", () => {
 
   test("shows initial time and does not decrement locally without socket updates", () => {
     render(<PlayerView />);
+    expect(mockSocket.emit).toHaveBeenCalledWith("joinRoom", "room-1");
+    expect(screen.getByText("Room: room-1")).toBeInTheDocument();
     expect(screen.getByText("60:00")).toBeInTheDocument();
 
     act(() => {
@@ -50,6 +52,9 @@ describe("PlayerView", () => {
 
   test("updates displayed time and hint from socket events", () => {
     render(<PlayerView />);
+    const roomStateHandler = mockSocket.on.mock.calls.find(
+      (args: unknown[]) => args[0] === "roomState"
+    )?.[1] as (value: { roomId: string; timeLeft: number; hint: string; isRunning: boolean }) => void;
     const updateTimeHandler = mockSocket.on.mock.calls.find(
       (args: unknown[]) => args[0] === "updateTime"
     )?.[1] as (value: number) => void;
@@ -58,6 +63,7 @@ describe("PlayerView", () => {
     )?.[1] as (value: string) => void;
 
     act(() => {
+      roomStateHandler({ roomId: "room-1", timeLeft: 300, hint: "Warm up hint", isRunning: false });
       updateTimeHandler(125);
       updateHintHandler("Try shining the flashlight at the painting");
     });
@@ -70,7 +76,9 @@ describe("PlayerView", () => {
     const { unmount } = render(<PlayerView />);
     unmount();
 
-    expect(mockSocket.off).toHaveBeenCalledWith("updateTime");
-    expect(mockSocket.off).toHaveBeenCalledWith("updateHint");
+    const offEvents = mockSocket.off.mock.calls.map((args: unknown[]) => args[0]);
+    expect(offEvents).toContain("roomState");
+    expect(offEvents).toContain("updateTime");
+    expect(offEvents).toContain("updateHint");
   });
 });
