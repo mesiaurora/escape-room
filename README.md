@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Escape Room Software
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React + Socket.IO application for running an escape room timer and hint system with two views:
+- `Controller` view for game masters
+- `Player` view for participants
 
-## Available Scripts
+## What It Does
 
-In the project directory, you can run:
+- Runs a shared countdown timer (default: 60 minutes)
+- Lets the controller start, pause, and reset the game
+- Lets the controller send hints to all connected player screens
+- Loads prewritten hints from `public/hints.json`
+- Syncs timer/hint state to newly connected clients through the Socket.IO server
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Frontend: React (Create React App), TypeScript/TSX, React Router
+- Realtime transport: Socket.IO client/server
+- Backend runtime: Node.js + Express + Socket.IO
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+- `src/App.tsx` route setup (`/controller`, `/player`)
+- `src/Controller.tsx` game master controls
+- `src/PlayerView.tsx` player-facing timer and hint display
+- `public/hints.json` predefined hints
+- `server.js` Socket.IO server (port `3001`)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prerequisites
 
-### `npm run build`
+- Node.js 18+ (recommended)
+- npm
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Run Locally
 
-### `npm run eject`
+You need **two terminals**.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Start the React frontend (port `3000`):
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Start the Socket.IO server (port `3001`):
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+node server.js
+```
 
-## Learn More
+Then open:
+- Controller: `http://localhost:3000/controller`
+- Player screen: `http://localhost:3000/player`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Controller Shortcuts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+In `Controller` view:
 
-### Code Splitting
+- `Ctrl + Shift + S`: Start timer
+- `Ctrl + Shift + P`: Pause timer
+- `Ctrl + Shift + R`: Reset timer + clear hint
+- `Ctrl + Shift + H`: Show currently selected hint
+- `Ctrl + Shift + C`: Clear hint
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Hint Configuration
 
-### Analyzing the Bundle Size
+Hints are loaded from `public/hints.json`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Current format:
 
-### Making a Progressive Web App
+```json
+[
+  {
+    "id": 1,
+    "title": "First hint",
+    "text": "Hint message"
+  }
+]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Controller renders each hint as `"<title>: <text>"` in the dropdown.
 
-### Advanced Configuration
+## Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- The pause button in the controller emits a `pauseGame` event, but `server.js` does not currently handle it.
+- The player view has a local 1-second countdown loop and also receives server updates.
 
-### Deployment
+## Build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+npm run build
+```
 
-### `npm run build` fails to minify
+## Test
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+npm test
+```
